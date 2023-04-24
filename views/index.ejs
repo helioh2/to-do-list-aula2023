@@ -7,7 +7,28 @@
     <title>Lista de Tarefas</title>
 </head>
 <body>
-    <h1>OLA LISTA DE TAREFAS</h1>
+    <h1>LISTA DE TAREFAS</h1>
     
+    <p> <% let x = 2*4 %>   <%= x %> </p>
+    <% if (x >= 10) { %>
+        <p> <%= soma  %>  </p>
+    <% } %>
+
+    <ul>
+        <% for (tarefa of tarefas) { %>
+            <li> 
+                <% if (tarefa.feito) { %>
+                    <del> <%= tarefa.texto %> | 
+                        <%= tarefa.dataCriacao.toLocaleDateString('pt-BR') %> 
+                    </del>
+                <% } else { %> 
+                    <%= tarefa.texto %> | 
+                    <%= tarefa.dataCriacao.toLocaleDateString('pt-BR') %> 
+                <% } %>   
+            </li>
+        <% } %>
+    </ul>
+
+
 </body>
 </html>
