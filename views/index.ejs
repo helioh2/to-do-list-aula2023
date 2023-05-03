@@ -7,22 +7,28 @@
     <title>Lista de Tarefas</title>
 </head>
 <body>
-    <h1>LISTA DE TAREFAS</h1>
     
-    <p> <% let x = 2*4 %>   <%= x %> </p>
-    <% if (x >= 10) { %>
-        <p> <%= soma  %>  </p>
-    <% } %>
+    <header>
+        <!-- Cabeçalho da página contendo o título e o input para inserir tarefa-->
+        <h1 id="titulo-lista-tarefas">LISTA DE TAREFAS</h1>
 
+        <form action="/add" method="POST">
+            <input type="text" id="tarefa" name="tarefa" placeholder="Digite a tarefa..." />
+            <!-- <textarea id="descricao_tarefa" name="descricao_tarefa"></textarea> -->
+            <input type="submit" value="Adicionar" />
+        </form>
+
+    </header>
+    
     <ul>
         <% for (tarefa of tarefas) { %>
             <li> 
                 <% if (tarefa.feito) { %>
-                    <del> <%= tarefa.texto %> | 
+                    <del> <%= tarefa.id %> | <%= tarefa.texto %> | 
                         <%= tarefa.dataCriacao.toLocaleDateString('pt-BR') %> 
                     </del>
                 <% } else { %> 
-                    <%= tarefa.texto %> | 
+                    <%= tarefa.id %> | <%= tarefa.texto %> | 
                     <%= tarefa.dataCriacao.toLocaleDateString('pt-BR') %> 
                 <% } %>   
             </li>

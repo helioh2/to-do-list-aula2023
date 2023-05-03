@@ -9,32 +9,46 @@ const port = 3000;
 
 app.set("view engine", "ejs"); // configurando express com ejs
 // app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded())
+app.use(express.json())
+
+// exemplos de tarefas hardcoded (chapado no código)
+let bd = [] // faz de conta que é a lista de tarefas do banco
+
 
 app.get("/", (req, res) => {
-    let soma = 2 + 2;
-
-    // exemplos de tarefas hardcoded (chapado no código)
-    let tarefas = [
-        {
-            id: 1,
-            texto: "Lavar louça",
-            dataCriacao: new Date(),
-            dataFinal: null,
-            feito: false,
-        },
-        {
-            id: 2,
-            texto: "Fazer trabalho",
-            dataCriacao: new Date("2023-04-23"),
-            dataFinal: new Date(),
-            feito: true,
-        }
-    ] // faz de conta que é a lista de tarefas do banco
-    
+  
     // let tarefas = [tarefa1, tarefa2] 
+    let tarefas = bd;
 
-    res.render("index", {soma, tarefas})
+    res.render("index", {tarefas})
 })
+
+app.post("/add", (req, res) => {
+
+    let textoTarefa = req.body.tarefa // pegando o parametro que veio na requisição
+
+    let id;
+    if (bd.length == 0) {
+        id = 1;
+    } else {
+        let ultimaTarefaInserida = bd.at(-1)
+        let ultimoId = ultimaTarefaInserida.id
+        id = ultimoId + 1
+    }
+
+    let tarefa = {
+        id: id,
+        texto: textoTarefa,
+        dataCriacao: new Date(),
+        feito: false
+    }  // criou o novo objeto tarefa
+
+    bd.push(tarefa); //adiciona a tarefa no BD
+
+    res.redirect("/")
+})
+
 
 app.get("/login", (req, res) => {
     res.send("TELA DE LOGIN");
@@ -42,6 +56,6 @@ app.get("/login", (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`)
+    console.log(`Servidor rodando na porta http://localhost:${port}`)
 });  // colocando o servidor para rodar
 
